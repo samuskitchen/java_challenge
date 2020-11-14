@@ -1,6 +1,7 @@
 package com.wolox.challenge.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -25,6 +26,7 @@ public class User {
     @JsonIgnore
     private Long id;
 
+    @JsonProperty("id")
     private Long endpointId;
 
     private String name;
