@@ -20,13 +20,13 @@ import java.util.concurrent.CompletableFuture;
 @Service
 public class AlbumExternalService {
 
+    private static final RestTemplate restTemplate = new RestTemplate();
+
     @Value("${endpoint.albums.url}")
     private String albumsUrl;
 
     @Value("${endpoint.albums.user.url}")
     private String albumUserUrl;
-
-    private static final RestTemplate restTemplate = new RestTemplate();
 
     @Async("asyncExecutor")
     public CompletableFuture<Album> getAlbumAsyncById(Long albumId) {
@@ -40,7 +40,7 @@ public class AlbumExternalService {
                     }
             );
         } catch (HttpStatusCodeException ex) {
-            throw new ResourceNotFoundException(UserExternalService.class.toString(), "id", albumId);
+            throw new ResourceNotFoundException(AlbumExternalService.class.toString(), "Album Id", albumId);
         }
 
         return CompletableFuture.completedFuture(response.getBody());
@@ -56,7 +56,7 @@ public class AlbumExternalService {
                     }
             );
         } catch (HttpStatusCodeException ex) {
-            throw new ResourceNotFoundException(UserExternalService.class.toString(), "All Albums", "");
+            throw new ResourceNotFoundException(AlbumExternalService.class.toString(), "All Albums", "");
         }
 
         return response.getBody();
@@ -73,7 +73,7 @@ public class AlbumExternalService {
                     }
             );
         } catch (HttpStatusCodeException ex) {
-            throw new ResourceNotFoundException(UserExternalService.class.toString(), "id", albumId);
+            throw new ResourceNotFoundException(AlbumExternalService.class.toString(), "Album Id", albumId);
         }
 
         return response.getBody();
@@ -90,7 +90,7 @@ public class AlbumExternalService {
                     }
             );
         } catch (HttpStatusCodeException ex) {
-            throw new ResourceNotFoundException(UserExternalService.class.toString(), "UserId", userId);
+            throw new ResourceNotFoundException(AlbumExternalService.class.toString(), "User Id", userId);
         }
 
         return response.getBody();

@@ -20,10 +20,10 @@ import java.util.concurrent.CompletableFuture;
 @Service
 public class UserExternalService {
 
+    private static final RestTemplate restTemplate = new RestTemplate();
+
     @Value("${endpoint.users.url}")
     private String usersUrl;
-
-    private static final RestTemplate restTemplate = new RestTemplate();
 
     @Async("asyncExecutor")
     public CompletableFuture<User> getUserAsyncById(Long userId) {
@@ -37,7 +37,7 @@ public class UserExternalService {
                     }
             );
         } catch (HttpStatusCodeException ex) {
-            throw new ResourceNotFoundException(UserExternalService.class.toString(), "id", userId);
+            throw new ResourceNotFoundException(UserExternalService.class.toString(), "User Id", userId);
         }
 
         return CompletableFuture.completedFuture(response.getBody());
@@ -70,11 +70,9 @@ public class UserExternalService {
                     }
             );
         } catch (HttpStatusCodeException ex) {
-            throw new ResourceNotFoundException(UserExternalService.class.toString(), "id", userId);
+            throw new ResourceNotFoundException(UserExternalService.class.toString(), "User Id", userId);
         }
 
         return response.getBody();
-
     }
-
 }
