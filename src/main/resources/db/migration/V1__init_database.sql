@@ -1,4 +1,4 @@
-CREATE TABLE users (
+CREATE TABLE "users" (
     id bigserial NOT NULL,
     endpoint_id bigint,
     email character varying(255),
@@ -67,12 +67,8 @@ ALTER TABLE "album_user" OWNER to postgres;
 -- ----------------------------
 -- Foreign Keys
 -- ----------------------------
-
 ALTER TABLE "post" ADD CONSTRAINT fk_user FOREIGN KEY (user_id) REFERENCES "users" (id) MATCH SIMPLE ON UPDATE NO ACTION ON DELETE NO ACTION;
-
 ALTER TABLE "photo" ADD CONSTRAINT fk_album FOREIGN KEY (album_id) REFERENCES "album" (id) MATCH SIMPLE ON UPDATE NO ACTION ON DELETE NO ACTION;
-
 ALTER TABLE "comment" ADD CONSTRAINT fk_post FOREIGN KEY (post_id) REFERENCES "post" (id) MATCH SIMPLE ON UPDATE NO ACTION ON DELETE NO ACTION;
-
 ALTER TABLE "album_user" ADD CONSTRAINT fk_user FOREIGN KEY (user_id) REFERENCES "users" (id) MATCH SIMPLE ON UPDATE NO ACTION ON DELETE NO ACTION;
 ALTER TABLE "album_user" ADD CONSTRAINT fk_album FOREIGN KEY (album_id) REFERENCES "album" (id) MATCH SIMPLE ON UPDATE NO ACTION ON DELETE NO ACTION;

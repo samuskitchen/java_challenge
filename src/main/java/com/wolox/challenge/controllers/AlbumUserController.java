@@ -43,8 +43,8 @@ public class AlbumUserController {
                                                            @PathParam("userId") Long userId,
                                                            @PathParam("accessTypeId") Long accessTypeId) {
 
-        return userExternalService.getUserById(userId)
-                .thenComposeAsync(user -> albumExternalService.getAlbumById(albumId)
+        return userExternalService.getUserAsyncById(userId)
+                .thenComposeAsync(user -> albumExternalService.getAlbumAsyncById(albumId)
                         .thenComposeAsync(album -> albumService.sharedAlbumWithUser(album, user, accessTypeId))
                         .thenApply(albumUser -> albumUser
                                 .orElseThrow(() -> new AlbumUserException("You do not have permission to save the record"))));
