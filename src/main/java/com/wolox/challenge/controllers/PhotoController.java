@@ -37,7 +37,7 @@ public class PhotoController {
         return photoExternalService.getPhotoById(photoId);
     }
 
-    @GetMapping("/user")
+    @GetMapping("/all/user")
     @ApiOperation(value = "Get All Photos By User Id", response = PhotoDTO[].class)
     public List<PhotoDTO> getPhotosByUserId(@RequestParam("userId") Long userId) {
         return photoExternalService.getPhotosByUserId(userId);

@@ -37,13 +37,13 @@ public class CommentController {
         return commentExternalService.getCommentById(commentId);
     }
 
-    @GetMapping("/name")
+    @GetMapping("/all/name")
     @ApiOperation(value = "Get All Comments By Name", response = CommentDTO[].class)
     public List<CommentDTO> getAllCommentsByName(@RequestParam(value = "name") String name) {
         return commentExternalService.getAllCommentsByName(name);
     }
 
-    @GetMapping("/user")
+    @GetMapping("/all/user")
     @ApiOperation(value = "Get All Comments By User Id", response = CommentDTO[].class)
     public List<CommentDTO> getAllCommentsByUserId(@RequestParam(value = "userId") Long userId) {
         return commentExternalService.getAllCommentsByUserId(userId);

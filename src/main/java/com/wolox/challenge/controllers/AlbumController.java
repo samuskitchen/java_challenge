@@ -37,7 +37,7 @@ public class AlbumController {
         return albumExternalService.getAlbumById(albumId);
     }
 
-    @GetMapping(params = "userId")
+    @GetMapping("/all/user")
     @ApiOperation(value = "Get All Albums By Id", response = AlbumDTO.class)
     public List<AlbumDTO> getAlbumsByUserId(@RequestParam(value = "userId") Long userId) {
         return albumExternalService.getAlbumsByUserId(userId);
