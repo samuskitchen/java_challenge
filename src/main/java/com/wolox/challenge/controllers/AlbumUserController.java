@@ -61,7 +61,7 @@ public class AlbumUserController {
                 .orElseThrow(() -> new AlbumUserException("Problems updating album access")));
     }
 
-    @GetMapping("/all/users/album/access-type")
+    @GetMapping("/all/users")
     @ApiOperation(value = "Get all users with the access permission associated with an album", response = AlbumUser[].class)
     public ResponseEntity<List<UserDTO>> getAllUsersByAlbumAndAccessType(@PathParam("albumId") Long albumId,
                                                                          @PathParam("accessTypeId") Long accessTypeId) {
