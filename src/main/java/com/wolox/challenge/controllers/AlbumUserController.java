@@ -4,6 +4,8 @@ import com.wolox.challenge.exceptions.AlbumUserException;
 import com.wolox.challenge.exceptions.ResourceNotFoundException;
 import com.wolox.challenge.models.AlbumUser;
 import com.wolox.challenge.models.User;
+import com.wolox.challenge.models.dtos.AlbumUserDTO;
+import com.wolox.challenge.models.dtos.UserDTO;
 import com.wolox.challenge.services.AlbumService;
 import com.wolox.challenge.services.external.AlbumExternalService;
 import com.wolox.challenge.services.external.UserExternalService;
@@ -39,9 +41,9 @@ public class AlbumUserController {
 
     @PostMapping("/album")
     @ApiOperation(value = "Associate an album to a user with permission to grant an access", response = AlbumUser.class)
-    public CompletableFuture<AlbumUser> shareAlbumWithUser(@PathParam("albumId") Long albumId,
-                                                           @PathParam("userId") Long userId,
-                                                           @PathParam("accessTypeId") Long accessTypeId) {
+    public CompletableFuture<AlbumUserDTO> shareAlbumWithUser(@PathParam("albumId") Long albumId,
+                                                              @PathParam("userId") Long userId,
+                                                              @PathParam("accessTypeId") Long accessTypeId) {
 
         return userExternalService.getUserAsyncById(userId)
                 .thenComposeAsync(user -> albumExternalService.getAlbumAsyncById(albumId)
@@ -52,7 +54,7 @@ public class AlbumUserController {
 
     @PutMapping("/album")
     @ApiOperation(value = "Update the access permission for a user to the album", response = AlbumUser.class)
-    public ResponseEntity<AlbumUser> updateAccessToAlbum(@PathParam("albumId") Long albumId,
+    public ResponseEntity<AlbumUserDTO> updateAccessToAlbum(@PathParam("albumId") Long albumId,
                                                          @PathParam("userId") Long userId,
                                                          @PathParam("accessTypeId") Long accessTypeId) {
         return ResponseEntity.ok(albumService.updateAccessToAlbum(albumId, userId, accessTypeId)
@@ -61,8 +63,8 @@ public class AlbumUserController {
 
     @GetMapping("/users/album/access-type")
     @ApiOperation(value = "Get all users with the access permission associated with an album", response = AlbumUser[].class)
-    public ResponseEntity<List<User>> getAllUsersByAlbumAndAccessType(@PathParam("albumId") Long albumId,
-                                                                      @PathParam("accessTypeId") Long accessTypeId) {
+    public ResponseEntity<List<UserDTO>> getAllUsersByAlbumAndAccessType(@PathParam("albumId") Long albumId,
+                                                                         @PathParam("accessTypeId") Long accessTypeId) {
         return ResponseEntity.ok(albumService.getAllUsersByAlbumAndAccessType(albumId, accessTypeId)
                 .orElseThrow(() -> new ResourceNotFoundException(
                         AlbumUserController.class.toString(),

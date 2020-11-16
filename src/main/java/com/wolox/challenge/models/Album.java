@@ -33,5 +33,4 @@ public class Album {
     private Long ownerEndpointId;
 
     private String title;
-
 }
