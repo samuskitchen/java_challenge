@@ -31,7 +31,7 @@ The health was added to be able to verify the status of the api
 ```
 
 ## Documentation
-You can get more information about each one looking at the Swagger documentation: 
+You can get more information in the Swagger documentation: 
 ```bash
 /api/challenge/swagger-ui.html
 ```
