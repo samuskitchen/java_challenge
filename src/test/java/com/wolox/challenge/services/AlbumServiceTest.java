@@ -20,9 +20,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,11 +30,11 @@ import java.util.concurrent.ExecutionException;
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.mockito.Mockito.any;
+import static org.mockito.Mockito.lenient;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-@ExtendWith(SpringExtension.class)
-class AlbumServiceTest {
+public class AlbumServiceTest {
 
     private Album album;
     private User user;
@@ -59,8 +57,6 @@ class AlbumServiceTest {
 
     @BeforeEach
     void setUp() {
-        MockitoAnnotations.openMocks(this);
-
         album = new AlbumFactory().newInstance();
 
         user = new UserFactory().newInstance();
@@ -75,15 +71,15 @@ class AlbumServiceTest {
     @Test
     void sharedAlbumWithUser() throws ExecutionException, InterruptedException {
         // Setup our mock repository
-        when(albumUserRepository.existsAlbumUserByAlbum_IdAndUser_Id(Mockito.anyLong(), Mockito.anyLong())).thenReturn(true);
+        lenient().when(albumUserRepository.existsAlbumUserByAlbum_IdAndUser_Id(Mockito.anyLong(), Mockito.anyLong())).thenReturn(true);
 
-        when(userRepository.findByEndpointId(Mockito.anyLong())).thenReturn(Optional.of(user));
-        when(userRepository.save(any(User.class))).thenReturn(user);
+        lenient().when(userRepository.findByEndpointId(Mockito.anyLong())).thenReturn(Optional.of(user));
+        lenient().when(userRepository.save(any(User.class))).thenReturn(user);
 
-        when(albumRepository.findByEndpointId(Mockito.anyLong())).thenReturn(Optional.of(album));
-        when(albumRepository.save(any(Album.class))).thenReturn(album);
+        lenient().when(albumRepository.findByEndpointId(Mockito.anyLong())).thenReturn(Optional.of(album));
+        lenient().when(albumRepository.save(any(Album.class))).thenReturn(album);
 
-        when(albumUserRepository.save(any(AlbumUser.class))).thenReturn(albumUser);
+        lenient().when(albumUserRepository.save(any(AlbumUser.class))).thenReturn(albumUser);
 
         // Execute the service call
         Optional<AlbumUserDTO> albumUserSave = albumService.sharedAlbumWithUser(album, user, 3L).get();
@@ -102,7 +98,7 @@ class AlbumServiceTest {
         Optional<AlbumUserDTO> albumUserDTO = albumService.updateAccessToAlbum(album.getEndpointId(), user.getEndpointId(), 2L);
 
         // Assert the response
-        Assertions.assertFalse(albumUserDTO.isPresent(), "The returned entity should not be null");
+        Assertions.assertTrue(albumUserDTO.isPresent(), "The returned entity should not be null");
     }
 
     @Test
@@ -114,7 +110,7 @@ class AlbumServiceTest {
         Optional<List<UserDTO>> dtoList = albumService.getAllUsersByAlbumAndAccessType(album.getEndpointId(), 3L);
 
         // Assert the response
-        Assertions.assertFalse(dtoList.isPresent(), "The returned entity should not be null");
+        Assertions.assertTrue(dtoList.isPresent(), "The returned entity should not be null");
         assertThat(dtoList.get(), not(IsEmptyCollection.empty()));
     }
 }
