@@ -8,7 +8,6 @@ import com.wolox.challenge.models.dtos.AlbumUserDTO;
 import com.wolox.challenge.models.dtos.UserDTO;
 import com.wolox.challenge.services.AlbumService;
 import com.wolox.challenge.services.external.AlbumExternalService;
-import com.wolox.challenge.services.external.CommentExternalService;
 import com.wolox.challenge.services.external.UserExternalService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -32,9 +31,6 @@ public class AlbumUserController {
     private final AlbumService albumService;
     private final UserExternalService userExternalService;
     private final AlbumExternalService albumExternalService;
-
-    @Autowired
-    private CommentExternalService commentExternalService;
 
     @Autowired
     public AlbumUserController(AlbumService albumService, UserExternalService userExternalService, AlbumExternalService albumExternalService) {
