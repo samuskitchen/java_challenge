@@ -1,7 +1,7 @@
 # Java Challenge
 
 The following technologies were used in this project:
-- Java 8
+- Java 11
 - Gradle
 - Lombok
 - Swagger
@@ -15,7 +15,7 @@ The following technologies were used in this project:
 - Flyway
 
 ## Requirements
-- Java 8
+- Java 11
 - Gradle
 - PostgreSQL
   * It is necessary to have the _postgres_ database created	
